@@ -1,3 +1,4 @@
+#importações das bibliotecas
 import  functions_DB 
 import tkinter
 
@@ -9,17 +10,16 @@ class crud():
 
         self.name = None
         self.email = None
-        self.OP = None
 
         self.DB = DB
         self.labels_Init()
         self.janela.mainloop()
 
     def labels_Init(self):
-        self.botaoC = tkinter.Button(text='Create', width= '15', height='2',command= self.create)
-        self.botaoR = tkinter.Button(text='Read', width= '15', height='2')    
-        self.botaoU = tkinter.Button(text='Update', width= '15', height='2')
-        self.botaoD = tkinter.Button(text='Delete', width= '15', height='2')
+        self.botaoC = tkinter.Button(text='Create', width= '15', height='2', command= self.create)
+        self.botaoR = tkinter.Button(text='Read', width= '15', height='2', command= self.read)    
+        self.botaoU = tkinter.Button(text='Update', width= '15', height='2', command= self.update)
+        self.botaoD = tkinter.Button(text='Delete', width= '15', height='2', command= self.delete)
         self.pack_labels()
     
     def labels_user(self):
@@ -27,17 +27,7 @@ class crud():
         self.entry_Name = tkinter.Entry(self.janela)
         self.l_Email  = tkinter.Label(self.janela, text='Email:')
         self.entry_Email = tkinter.Entry(self.janela)
-        self.botao_confirm = tkinter.Button(self.janela, text='Confirmar', command= self.Capture)
-
-    def base(self):
-        if self.OP == 'c':
-            self.DB.Create(self.name, self.email)
-
-    def Capture(self):
-        self.name = self.entry_Name.get()
-        self.email = self.entry_Email.get()
-        self.base()
-        
+        self.botao_confirm = tkinter.Button(self.janela, text='Confirmar', command= self.add)
 
     def pack_labels_users(self):
         self.l_Name.pack()
@@ -46,21 +36,45 @@ class crud():
         self.entry_Email.pack()  
         self.botao_confirm.pack()
 
+    def unpack_labels_users(self):
+        self.l_Name.pack_forget()
+        self.entry_Name.pack_forget()  
+        self.l_Email.pack_forget()
+        self.entry_Email.pack_forget()  
+        self.botao_confirm.pack_forget()
+
+    def res(self):
+        self.unpack_labels_users()
+        self.resultado = tkinter.Label(self.janela, text=self.DB.Create(self.name, self.email))
+        self.botao_ok = tkinter.Button(self.janela, text='Ok', command= self.unpack_res)
+        self.pack_res()
+
+    def pack_res(self):
+        self.resultado.pack()
+        self.botao_ok.pack()
+
+    def unpack_res(self):
+        self.resultado.pack_forget()
+        self.botao_ok.pack_forget()
+        self.pack_labels()
+
+    def add(self):
+        self.name = self.entry_Name.get().lower()
+        self.email = self.entry_Email.get().lower()
+        self.res()
+        
+
     def create(self):
         self.unpack_labels()
         self.labels_user()
         self.pack_labels_users()
-        self.OP = 'c'
-            
-
+        
     def read(self):
         self.unpack_labels()
         
-
     def update(self):
         self.unpack_labels()
         
-
     def delete(self):
         self.unpack_labels()
         
@@ -79,4 +93,5 @@ class crud():
 
 
 if __name__ == '__main__':
+    functions_DB.init_DB()
     crud(functions_DB)
