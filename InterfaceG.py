@@ -92,6 +92,11 @@ class crud():
         self.email = self.entry_Email.get().lower()
         self.res(txt=self.DB.Update(self.name, self.email))
 
+    def dele(self):
+        self.name = self.entry_Name.get().lower()
+        self.email = None
+        self.res(txt=self.DB.Delete(self.name))
+
 
     def create(self):
         self.unpack_labels()
@@ -110,6 +115,8 @@ class crud():
         
     def delete(self):
         self.unpack_labels()
+        self.labels_user(self.dele)
+        self.pack_labels_users2()
         
 
 
