@@ -1,30 +1,38 @@
 import dbm
 
-def Create(user, email): #Função que adiciona um novo registro.
-    db = dbm.open('Base.db', 'c')
+def init_DB():
+    db = dbm.open('Banco', 'c')
+    db.close()
+
+def Create(user: str, email: str):
+    """Adiciona um novo registro."""
+    db = dbm.open('Banco', 'w')
     if user in db:
         return f'Usuário já existe nos registros!'
     else:
         db[user] = email
         return f'Usuário criado com sucesso!'
 
-def Read(user): #Função que consulta um registro.
-    db = dbm.open('Base.db', 'r')
+def Read(user: str):
+    """Consulta um registro."""
+    db = dbm.open('Banco', 'r')
     if user in db: 
         return f'E-mail: {db[user].decode()}'
     else:
         return 'Usuário não encontrado nos registros!'
     
-def Update(user): #Função que atualiza um registro.
-    db = dbm.open('Base.db', 'c')
+def Update(user: str, email: str): 
+    """Atualiza um registro."""
+    db = dbm.open('Banco', 'w')
     if user in db:
-        db[user] = input('E-mail: ')
+        db[user] = email
         return 'Usuário Atualizado!'
     else:
         return 'Usuário não encontrado nos registros!'
 
-def Delete(user): #Função que apaga um registro.
-    db = dbm.open('Base.db', 'c')
+def Delete(user):
+    """Apaga um registro."""
+    db = dbm.open('Banco', 'w')
     if user in db:
         del db[user]
         return 'Usuário Deletado!'
