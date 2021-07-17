@@ -71,7 +71,7 @@ class crud():
         self.botao_ok.pack_forget()
         self.pack_labels()
 
-    def res_add(self, txt):
+    def res(self, txt):
         self.unpack_labels_users()
         self.resultado = tkinter.Label(self.janela, text=txt)
         self.botao_ok = tkinter.Button(self.janela, text='Ok', command= self.unpack_res)
@@ -80,12 +80,17 @@ class crud():
     def add(self):
         self.name = self.entry_Name.get().lower()
         self.email = self.entry_Email.get().lower()
-        self.res_add(self.DB.Create(self.name, self.email))
+        self.res(self.DB.Create(self.name, self.email))
         
     def get(self):
         self.name = self.entry_Name.get().lower()
         self.email = None
-        self.res_add(txt=self.DB.Read(self.name))
+        self.res(txt=self.DB.Read(self.name))
+
+    def set(self):
+        self.name = self.entry_Name.get().lower()
+        self.email = self.entry_Email.get().lower()
+        self.res(txt=self.DB.Update(self.name, self.email))
 
 
     def create(self):
@@ -100,6 +105,8 @@ class crud():
         
     def update(self):
         self.unpack_labels()
+        self.labels_user(cmd=self.set)
+        self.pack_labels_users1()
         
     def delete(self):
         self.unpack_labels()
