@@ -17,7 +17,7 @@ def Read(user: str):
     """Consulta um registro."""
     db = dbm.open('Banco', 'r')
     if user in db: 
-        return f'E-mail: {db[user].decode()}'
+        return f'User: {user}\nE-mail: {db[user].decode()}'
     else:
         return 'Usuário não encontrado nos registros!'
     
